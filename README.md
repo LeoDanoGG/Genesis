@@ -114,8 +114,6 @@ genesis fast                 # asks only for the project name
 
 Every other answer is taken from `genesis.conf`. If you give a URL as the second argument, the repository is cloned instead of creating a local folder. A one-line summary of the applied settings is printed before anything is created.
 
----
-
 <details>
 <summary><h2>Configuration file</h2></summary>
 
@@ -190,7 +188,7 @@ The rules (`make -C`, `clean`, `fclean`) and include path (`-I`) follow `LIBFT_D
 
 Libraries that need more than that, such as MiniLibX (extra system flags, its own build process), are **not** covered by the template: check the subject and add the flags yourself.
 
----
+</details>
 
 ## Syncing existing projects
 
