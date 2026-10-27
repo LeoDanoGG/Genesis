@@ -1,34 +1,21 @@
-*This project has been created for help in the development of the 42 curriculum by legomez.*
+# Genesis
 
-# 42 Project Initializer (`42init` for 42 Cursus)
+Genesis is an interactive CLI assistant (*wizard*) for 42 School students to quickly scaffold project workspaces, clone Vogsphere/GitHub repositories, generate language-specific boilerplate (C & Python), and keep your source files synchronized between the `Makefile` and the `README.md`. A configuration file lets you skip every question with a single command.
 
-<img src="https://skillicons.dev/icons?i=bash&theme=dark" width="150"/> 
-
-An interactive CLI assistant (*wizard*) for 42 School students to quickly scaffold project workspaces, clone Vogsphere/GitHub repositories, generate language-specific boilerplate (C & Python), and keep your source files synchronized between the `Makefile` and the `README.md`. A configuration file lets you skip every question with a single command.
-
-## Table of contents
-
-- [Key features](#key-features)
-- [Requirements](#requirements)
-- [Installation](#installation)
-- [How to use](#how-to-use)
-- [Configuration file](#configuration-file)
-- [Makefile options](#makefile-options)
-- [Syncing existing projects](#syncing-existing-projects)
-- [Limitations](#limitations)
-- [Important reminders](#important-reminders)
+> Genesis is an independent, community-made tool. It is not affiliated with, endorsed by or sponsored by 42 or its schools
 
 ---
 
-## Key features
+<details>
+<summary><h2>Key features</h2></summary>
 
-1. **Interactive CLI wizard:** launch `42init` and answer simple prompts. Invalid answers are rejected and asked again.
-2. **Fast mode:** `42init fast` applies the values of a configuration file and asks nothing (except the project name, if you do not pass it).
+1. **Interactive CLI wizard:** launch `genesis` and answer simple prompts. Invalid answers are rejected and asked again.
+2. **Fast mode:** `genesis fast` applies the values of a configuration file and asks nothing (except the project name, if you do not pass it).
 3. **Configurable defaults:** the same file sets the default answer of every wizard prompt, so pressing Enter can mean *Yes* or *No* as you prefer.
 4. **Three modes:**
    - **Create / Scaffold** a brand-new C or Python workspace.
    - **Fast** scaffold from the configuration file.
-   - **Sync** `.c` files into the `Makefile` and `README.md` (`42init sync`).
+   - **Sync** `.c` files into the `Makefile` and `README.md` (`genesis sync`).
 5. **C and Python support:**
    - **C:** optional header file (`.h`) with a valid include guard, a `Makefile` for a **program** or a **static library** (built with `ar`), header dependency tracking, and optional linking against your own `libft`.
    - **Python:** an executable `main.py` entrypoint and an empty `requirements.txt`.
@@ -37,65 +24,65 @@ An interactive CLI assistant (*wizard*) for 42 School students to quickly scaffo
 8. **Tailored documentation:** the `README.md` template covers description, architecture, usage, testing, resources and AI usage disclosure.
 9. **Safe configuration:** the file is *read*, never executed (see [Configuration file](#configuration-file)).
 
----
+</details>
 
 ## Requirements
 
 - `bash`, `git`, and standard Unix tools (`awk`, `sed`, `find`)
 - macOS or Linux (portable syntax, no GNU-only flags)
 
----
+<details>
+<summary><h2>Installation</h2></summary>
 
-## Installation
-
-Clone the repository once and point a global alias at the script. Updating is then a simple `git pull`. Keep `42init.conf` next to the script: that is where it is read from (symbolic links to the script are followed).
+Clone the repository once and point a global alias at the script. Updating is then a simple `git pull`. Keep `genesis.conf` next to the script: that is where it is read from (symbolic links to the script are followed).
 
 1. **Clone it:**
    ```bash
    mkdir -p ~/scripts
-   git clone https://github.com/LeoDanoGG/42Madrid_init ~/scripts/42init
-   chmod +x ~/scripts/42init/42init.sh
+   git clone https://github.com/LeoDanoGG/Genesis ~/scripts/genesis
+   chmod +x ~/scripts/genesis/genesis.sh
    ```
 
 2. **Create the alias for your shell:**
 
    - **Zsh** (default shell on 42 Macs):
      ```bash
-     echo "alias 42init='~/scripts/42init/42init.sh'" >> ~/.zshrc
+     echo "alias genesis='~/scripts/genesis/genesis.sh'" >> ~/.zshrc
      source ~/.zshrc
      ```
 
    - **Fish:**
      ```fish
-     alias 42init='$HOME/scripts/42init/42init.sh'
-     funcsave 42init
+     alias genesis='$HOME/scripts/genesis/genesis.sh'
+     funcsave genesis
      ```
      `funcsave` persists the alias for all future sessions.
 
 3. **Update later:**
    ```bash
-   git -C ~/scripts/42init pull
+   git -C ~/scripts/genesis pull
    ```
-   If you edited `42init.conf` locally, `git pull` may complain about your changes. Run `git stash` before pulling and `git stash pop` afterwards.
+   If you edited `genesis.conf` locally, `git pull` may complain about your changes. Run `git stash` before pulling and `git stash pop` afterwards.
 
 > 💡 **Default author:** when `AUTHOR` is empty in the configuration file, the script uses your current login (`$USER`).
 
----
+</details>
 
 ## How to use
 
 Run the command from the directory where you want the project folder to be created.
 
 ```bash
-42init                       # interactive wizard
-42init fast [name] [url]     # no questions: values come from 42init.conf
-42init default [name] [url]  # same as fast
-42init sync                  # update SRCS and the README list in the current directory
+genesis                       # interactive wizard
+genesis fast [name] [url]     # no questions: values come from genesis.conf
+genesis default [name] [url]  # same as fast
+genesis sync                  # update SRCS and the README list in the current directory
 ```
 
-### Interactive wizard
+<details>
+<summary><h2>Interactive wizard</h2></summary>
 
-Each prompt shows its default in the hint: `[Y/n]` means Enter applies *Yes*, `[y/N]` means Enter applies *No*. Defaults come from [`42init.conf`](#configuration-file).
+Each prompt shows its default in the hint: `[Y/n]` means Enter applies *Yes*, `[y/N]` means Enter applies *No*. Defaults come from [`genesis.conf`](#configuration-file).
 
 1. **Action:**
    1. Create / Scaffold a new project
@@ -115,21 +102,24 @@ Each prompt shows its default in the hint: `[Y/n]` means Enter applies *Yes*, `[
 
 If you cloned a repository that already contains `.c` files in its root, they are added to `SRCS` and to the README list automatically.
 
+</details>
+
 ### Fast mode
 
 ```bash
-42init fast ft_printf
-42init fast push_swap git@vogsphere.42madrid.fr:...
-42init fast                 # asks only for the project name
+genesis fast ft_printf
+genesis fast push_swap git@vogsphere.42madrid.fr:...
+genesis fast                 # asks only for the project name
 ```
 
-Every other answer is taken from `42init.conf`. If you give a URL as the second argument, the repository is cloned instead of creating a local folder. A one-line summary of the applied settings is printed before anything is created.
+Every other answer is taken from `genesis.conf`. If you give a URL as the second argument, the repository is cloned instead of creating a local folder. A one-line summary of the applied settings is printed before anything is created.
 
 ---
 
-## Configuration file
+<details>
+<summary><h2>Configuration file</h2></summary>
 
-`42init.conf`, located next to the script, is used by both fast mode and the wizard defaults.
+`genesis.conf`, located next to the script, is used by both fast mode and the wizard defaults.
 
 ```ini
 AUTHOR=
@@ -141,15 +131,15 @@ USE_LIBFT=n
 GENERATE_README=y
 ```
 
-| Key | Values | Meaning |
-|-----|--------|---------|
-| `AUTHOR` | letters, digits, `. _ , -` and spaces | Author login(s). Empty = your `$USER`. |
-| `LANGUAGE` | `c` \| `python` | Language of the new project. |
-| `PROJECT_TYPE` | `program` \| `library` | What the C `Makefile` builds. |
-| `GENERATE_HEADER` | `y` \| `n` | Generate `<name>.h` (C only). |
-| `GENERATE_MAKEFILE` | `y` \| `n` | Generate a `Makefile` (C only). |
-| `USE_LIBFT` | `y` \| `n` | Use the `libft` template in the `Makefile`. |
-| `GENERATE_README` | `y` \| `n` | Generate `README.md`. |
+| Key					| Values									| Meaning										|
+|-----------------------|-------------------------------------------|-----------------------------------------------|
+| `AUTHOR`				| letters, digits, `. _ , -` and spaces		| Author login(s). Empty = your `$USER`.		|
+| `LANGUAGE`			| `c` \| `python`							| Language of the new project.					|
+| `PROJECT_TYPE`		| `program` \| `library`					| What the C `Makefile` builds.					|
+| `GENERATE_HEADER`		| `y` \| `n`								| Generate `<name>.h` (C only).					|
+| `GENERATE_MAKEFILE`	| `y` \| `n`								| Generate a `Makefile` (C only).				|
+| `USE_LIBFT`			| `y` \| `n`								| Use the `libft` template in the `Makefile`.	|
+| `GENERATE_README`		| `y` \| `n`								| Generate `README.md`.							|
 
 Example: with `GENERATE_README=n`, the wizard prompt becomes `[y/N]` and fast mode skips the README. `y`/`yes` and `n`/`no` are accepted in any case.
 
@@ -159,9 +149,10 @@ The file is **read line by line, never executed**: the script does not use `sour
 
 If the file is missing, built-in defaults are used (the same as the example above).
 
----
+</details>
 
-## Makefile options
+<details>
+<summary><h2>Makefile options</h2></summary>
 
 ### Program or static library
 
@@ -189,11 +180,11 @@ The generated `Makefile` expects your library in `./libft`, with its own `Makefi
 
 The `libft` option is a **template**. If you need another library with the same layout (a folder with its own `Makefile` that builds a `.a`), generate the project with this option and then edit the generated `Makefile` by hand. A comment above the variables reminds you of where:
 
-| What | Where | Example |
-|------|-------|---------|
-| Folder | `LIBFT_DIR` | `./mylib` |
-| Archive name | `LIBFT` | `$(LIBFT_DIR)/libmylib.a` |
-| Link flag *(program type only)* | `-lft` in the `$(NAME)` rule | `-lmylib` |
+| What								| Where							| Example 					|
+|-----------------------------------|-------------------------------|---------------------------|
+| Folder							| `LIBFT_DIR`					| `./mylib`					|
+| Archive name 						| `LIBFT`						| `$(LIBFT_DIR)/libmylib.a`	|
+| Link flag *(program type only)*	| `-lft` in the `$(NAME)` rule	| `-lmylib`					|
 
 The rules (`make -C`, `clean`, `fclean`) and include path (`-I`) follow `LIBFT_DIR`, so they need no changes.
 
@@ -207,21 +198,23 @@ Once you have added or removed `.c` files in your project root, you do not need 
 
 ```bash
 cd my_project
-42init sync
+genesis sync
 ```
 
-*(Or run `42init` and choose option 2.)*
+*(Or run `genesis` and choose option 2.)*
 
 The script scans for `.c` files, groups them 5 per line, and rewrites only what is **between the markers**:
 
-| File | Start marker | End marker |
-|------|--------------|------------|
-| `Makefile` | `# SRCS_START` | `# SRCS_END` |
-| `README.md` | `<!-- FILES_START -->` | `<!-- FILES_END -->` |
+| File			| Start marker				| End marker			|
+|---------------|---------------------------|-----------------------|
+| `Makefile`	| `# SRCS_START`			| `# SRCS_END`			|
+| `README.md`	| `<!-- FILES_START -->`	| `<!-- FILES_END -->`	|
 
 If a file or its markers are missing, that file is skipped with a warning and nothing else is touched. Running sync repeatedly gives the same result. It works the same for programs and static libraries.
 
 > If you cloned a repository that already had its own `README.md`, the script will not overwrite it. To use sync with it, add the two README markers wherever you want the list to appear.
+
+</details>
 
 ---
 
