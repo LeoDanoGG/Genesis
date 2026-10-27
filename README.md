@@ -80,7 +80,7 @@ genesis sync                  # update SRCS and the README list in the current d
 ```
 
 <details>
-<summary><h2>Interactive wizard</h2></summary>
+<summary><h3>Interactive wizard</h3></summary>
 
 Each prompt shows its default in the hint: `[Y/n]` means Enter applies *Yes*, `[y/N]` means Enter applies *No*. Defaults come from [`genesis.conf`](#configuration-file).
 
@@ -114,8 +114,30 @@ genesis fast                 # asks only for the project name
 
 Every other answer is taken from `genesis.conf`. If you give a URL as the second argument, the repository is cloned instead of creating a local folder. A one-line summary of the applied settings is printed before anything is created.
 
+### Syncing existing projects
+
+Once you have added or removed `.c` files in your project root, you do not need to edit `SRCS` or the README list by hand:
+
+```bash
+cd my_project
+genesis sync
+```
+
+*(Or run `genesis` and choose option 2.)*
+
+The script scans for `.c` files, groups them 5 per line, and rewrites only what is **between the markers**:
+
+| File			| Start marker				| End marker			|
+|---------------|---------------------------|-----------------------|
+| `Makefile`	| `# SRCS_START`			| `# SRCS_END`			|
+| `README.md`	| `<!-- FILES_START -->`	| `<!-- FILES_END -->`	|
+
+If a file or its markers are missing, that file is skipped with a warning and nothing else is touched. Running sync repeatedly gives the same result. It works the same for programs and static libraries.
+
+> If you cloned a repository that already had its own `README.md`, the script will not overwrite it. To use sync with it, add the two README markers wherever you want the list to appear.
+
 <details>
-<summary><h2>Configuration file</h2></summary>
+<summary><h3>Configuration file</h3></summary>
 
 `genesis.conf`, located next to the script, is used by both fast mode and the wizard defaults.
 
@@ -141,7 +163,7 @@ GENERATE_README=y
 
 Example: with `GENERATE_README=n`, the wizard prompt becomes `[y/N]` and fast mode skips the README. `y`/`yes` and `n`/`no` are accepted in any case.
 
-### Why it is safe
+#### Why it is safe
 
 The file is **read line by line, never executed**: the script does not use `source` or `eval`. Only the keys above are accepted, each value is checked against its allowed set, and anything else (unknown keys, malformed lines, shell syntax such as `$(...)` or backticks) is ignored with a warning. The same applies to author logins typed in the wizard. Repository URLs are passed to `git clone` after `--`, so a URL can never be interpreted as a git option.
 
@@ -150,20 +172,20 @@ If the file is missing, built-in defaults are used (the same as the example abov
 </details>
 
 <details>
-<summary><h2>Makefile options</h2></summary>
+<summary><h3>Makefile options</h3></summary>
 
-### Program or static library
+#### Program or static library
 
 - **Program:** `NAME` is the project name and the `Makefile` links the objects into an executable.
 - **Static library:** `NAME` is a `lib<name>.a` archive built with `ar rcs`. The name is derived from the project name: `ft_printf` → `libftprintf.a`, `libft` → `libft.a`. Edit `NAME` if your subject requires something else.
 
 With the library type **and** the `libft` option, the `Makefile` first copies `libft.a` to `NAME` and then adds your objects with `ar rcs`, so the final archive contains both your code and libft. Without `libft`, it only archives your objects. Check the subject of your project for the exact requirements (name, allowed tools and whether it must include libft).
 
-### About the header option
+#### About the header option
 
 Say **no** to the header when a cloned repository already ships its own. The `Makefile` links the header as a dependency of every `.o` file through the `HEADER` variable, which is filled in only if `<name>.h` actually exists. If it does not (for example, your header has another name), `HEADER` is left empty and `make` keeps working; set it by hand to the right file so that editing it triggers a recompilation.
 
-### About the `libft` option
+#### About the `libft` option
 
 The generated `Makefile` expects your library in `./libft`, with its own `Makefile` producing `libft.a`. Copy the **sources, its `Makefile` and `libft.h`** (not the `.o` / `.a` files, and without a nested `.git` folder).
 
@@ -174,7 +196,7 @@ The generated `Makefile` expects your library in `./libft`, with its own `Makefi
 
 **If you edit libft while working on the project**, `make` will not notice, because `libft.a` already exists. Run `make -C libft` (or `make re`) to pick up the changes. In an evaluation this is not an issue, since the repository is cloned and built from scratch.
 
-### Using a different library
+#### Using a different library
 
 The `libft` option is a **template**. If you need another library with the same layout (a folder with its own `Makefile` that builds a `.a`), generate the project with this option and then edit the generated `Makefile` by hand. A comment above the variables reminds you of where:
 
@@ -187,30 +209,6 @@ The `libft` option is a **template**. If you need another library with the same 
 The rules (`make -C`, `clean`, `fclean`) and include path (`-I`) follow `LIBFT_DIR`, so they need no changes.
 
 Libraries that need more than that, such as MiniLibX (extra system flags, its own build process), are **not** covered by the template: check the subject and add the flags yourself.
-
-</details>
-
-## Syncing existing projects
-
-Once you have added or removed `.c` files in your project root, you do not need to edit `SRCS` or the README list by hand:
-
-```bash
-cd my_project
-genesis sync
-```
-
-*(Or run `genesis` and choose option 2.)*
-
-The script scans for `.c` files, groups them 5 per line, and rewrites only what is **between the markers**:
-
-| File			| Start marker				| End marker			|
-|---------------|---------------------------|-----------------------|
-| `Makefile`	| `# SRCS_START`			| `# SRCS_END`			|
-| `README.md`	| `<!-- FILES_START -->`	| `<!-- FILES_END -->`	|
-
-If a file or its markers are missing, that file is skipped with a warning and nothing else is touched. Running sync repeatedly gives the same result. It works the same for programs and static libraries.
-
-> If you cloned a repository that already had its own `README.md`, the script will not overwrite it. To use sync with it, add the two README markers wherever you want the list to appear.
 
 </details>
 
