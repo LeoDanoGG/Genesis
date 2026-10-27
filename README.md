@@ -232,6 +232,4 @@ If a file or its markers are missing, that file is skipped with a warning and no
 
 > ⚠️ **Makefile tabs.** Recipe lines must start with a real TAB. If you edit the generated `Makefile` and get `missing separator`, your editor probably converted tabs into spaces.
 
-> ⚠️ **42 header.** This script creates structural boilerplate only. Insert the official 42 header (`:Stdheader` in Vim / VS Code extension) at the top of your `.c`, `.h` and `Makefile` files, as your subject and evaluation require. Norminette itself checks `.c` and `.h` files; check your subject for the rest.
-
 > ⚠️ **Check the subject.** The generated files are a starting point. Always verify the final `Makefile` and `README.md` against the requirements of your specific project.
