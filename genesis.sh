@@ -1,11 +1,11 @@
 #!/bin/bash
 
 # ==============================================================================
-# 42init - Interactive project scaffolder for 42 School
+# Genesis - Interactive project scaffolder for 42 School students
 #
-#   42init                       Interactive wizard
-#   42init fast [name] [url]     Quick start: answers come from 42init.conf
-#   42init sync                  Refresh SRCS and the README file list right here
+#   genesis                      Interactive wizard
+#   genesis fast [name] [url]    Quick start: answers come from genesis.conf
+#   genesis sync                 Refresh SRCS and the README file list right here
 # ==============================================================================
 
 BLUE="\033[34m"; GREEN="\033[32m"; YELLOW="\033[33m"
@@ -20,10 +20,10 @@ err()  { printf '%bError: %s%b\n' "$RED" "$1" "$RESET"; }
 usage() {
     cat << 'EOF'
 Usage:
-  42init                        Interactive wizard
-  42init fast [name] [url]      Quick start using 42init.conf (no questions)
-  42init default [name] [url]   Same as 'fast'
-  42init sync                   Update SRCS and README file list in this directory
+  genesis                       Interactive wizard
+  genesis fast [name] [url]     Quick start using genesis.conf (no questions)
+  genesis default [name] [url]  Same as 'fast'
+  genesis sync                  Update SRCS and README file list in this directory
 EOF
 }
 
@@ -90,7 +90,7 @@ ask_name() {
 }
 
 # ==============================================================================
-# CONFIGURATION (42init.conf, next to this script)
+# CONFIGURATION (genesis.conf, next to this script)
 #
 # The file is READ, never executed: no source, no eval. Only whitelisted keys
 # are accepted and every value is validated before being stored.
@@ -107,7 +107,7 @@ resolve_script_dir() {
 }
 
 SCRIPT_DIR="$(resolve_script_dir)"
-CONFIG_FILE="$SCRIPT_DIR/42init.conf"
+CONFIG_FILE="$SCRIPT_DIR/genesis.conf"
 
 # Built-in defaults (used when the file or a key is missing/invalid)
 CFG_AUTHOR=""
@@ -138,7 +138,7 @@ load_config() {
             ""|"#"*) continue ;;
         esac
         if [[ "$line" != *=* ]]; then
-            warn "42init.conf:$lineno: not a KEY=VALUE line, ignored."
+            warn "genesis.conf:$lineno: not a KEY=VALUE line, ignored."
             continue
         fi
         key="$(trim "${line%%=*}")"
@@ -151,19 +151,19 @@ load_config() {
                 elif valid_author "$value"; then
                     CFG_AUTHOR="$value"
                 else
-                    warn "42init.conf:$lineno: invalid AUTHOR (letters, digits, . _ , - and spaces only), ignored."
+                    warn "genesis.conf:$lineno: invalid AUTHOR (letters, digits, . _ , - and spaces only), ignored."
                 fi ;;
             LANGUAGE)
                 v="$(lower "$value")"
                 case "$v" in
                     c|python) CFG_LANGUAGE="$v" ;;
-                    *) warn "42init.conf:$lineno: LANGUAGE must be c or python, ignored." ;;
+                    *) warn "genesis.conf:$lineno: LANGUAGE must be c or python, ignored." ;;
                 esac ;;
             PROJECT_TYPE)
                 v="$(lower "$value")"
                 case "$v" in
                     program|library) CFG_TYPE="$v" ;;
-                    *) warn "42init.conf:$lineno: PROJECT_TYPE must be program or library, ignored." ;;
+                    *) warn "genesis.conf:$lineno: PROJECT_TYPE must be program or library, ignored." ;;
                 esac ;;
             GENERATE_HEADER|GENERATE_MAKEFILE|USE_LIBFT|GENERATE_README)
                 if v="$(parse_bool "$value")"; then
@@ -174,13 +174,13 @@ load_config() {
                         GENERATE_README)   CFG_README="$v" ;;
                     esac
                 else
-                    warn "42init.conf:$lineno: $key must be y or n, ignored."
+                    warn "genesis.conf:$lineno: $key must be y or n, ignored."
                 fi ;;
             *)
                 if [[ "$key" =~ ^[A-Za-z0-9_]+$ ]]; then
-                    warn "42init.conf:$lineno: unknown key '$key', ignored."
+                    warn "genesis.conf:$lineno: unknown key '$key', ignored."
                 else
-                    warn "42init.conf:$lineno: invalid line, ignored."
+                    warn "genesis.conf:$lineno: invalid line, ignored."
                 fi ;;
         esac
     done < "$CONFIG_FILE"
@@ -265,11 +265,11 @@ NEED_HEADER="n"; NEED_MAKEFILE="n"; MK_TYPE="1"; USE_LIB="n"; NEED_README="y"
 
 if [ "$FAST" = "0" ]; then
     # ==========================================================================
-    # INTERACTIVE WIZARD (defaults come from 42init.conf)
+    # INTERACTIVE WIZARD (defaults come from genesis.conf)
     # ==========================================================================
     clear
     echo -e "${CYAN}==================================================${RESET}"
-    echo -e "${CYAN}             🚀 42 PROJECT INITIALIZER            ${RESET}"
+    echo -e "${CYAN}          🚀 GENESIS PROJECT INITIALIZER          ${RESET}"
     echo -e "${CYAN}==================================================${RESET}"
     echo ""
 
@@ -347,12 +347,12 @@ if [ "$FAST" = "0" ]; then
 
 else
     # ==========================================================================
-    # FAST MODE (everything comes from 42init.conf; only the name may be asked)
+    # FAST MODE (everything comes from genesis.conf; only the name may be asked)
     # ==========================================================================
     if [ -f "$CONFIG_FILE" ]; then
         info "Fast mode: reading $CONFIG_FILE"
     else
-        warn "No 42init.conf next to the script: using built-in defaults."
+        warn "No genesis.conf next to the script: using built-in defaults."
     fi
 
     DIR_NAME="${2:-}"
