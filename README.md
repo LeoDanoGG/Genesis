@@ -1,11 +1,12 @@
 # Genesis
 
-> ⚠️ **DISCLAIMER** <br>
-> `Genesis.sh` only works for `c` projects at this moment (`Python` workspace coming soon...)
+> [!NOTE]
+> `Genesis.sh` only works for `C` projects at this moment, `Python` workspace coming soon!
 
-Genesis is an interactive CLI assistant (*wizard*) for 42 School students to quickly scaffold project workspaces, clone Vogsphere/GitHub repositories, generate language-specific boilerplate (C & Python), and keep your source files synchronized between the `Makefile` and the `README.md`. A configuration file lets you skip every question with a single command.
+> [!IMPORTANT]
+> Genesis is an independent, community-made tool and is not affiliated with, endorsed by or sponsored by 42 or its schools.
 
-> Genesis is an independent, community-made tool. It is not affiliated with, endorsed by or sponsored by 42 or its schools
+Genesis is an interactive CLI assistant (*wizard*) to quickly scaffold project workspaces, clone Vogsphere/GitHub repositories, generate language-specific boilerplate (`C` & `Python`), and keep your source files synchronized between the `Makefile` and the `README.md`. A configuration file lets you skip every question with a single command.
 
 ---
 
@@ -229,8 +230,7 @@ Libraries that need more than that, such as MiniLibX (extra system flags, its ow
 
 ## Important reminders
 
-> ⚠️ **Preserve the markers.** Do not delete or rename `# SRCS_START` / `# SRCS_END` in the `Makefile` or `<!-- FILES_START -->` / `<!-- FILES_END -->` in the `README.md`.
-
-> ⚠️ **Makefile tabs.** Recipe lines must start with a real TAB. If you edit the generated `Makefile` and get `missing separator`, your editor probably converted tabs into spaces.
-
+> [!WARNING]
+> ⚠️ **Preserve the markers.** Do not delete or rename `# SRCS_START` / `# SRCS_END` in the `Makefile` or `<!-- FILES_START -->` / `<!-- FILES_END -->` in the `README.md`. Make sure you no longer need them before delete. <br><br>
+> ⚠️ **Makefile tabs.** Recipe lines must start with a real TAB. If you edit the generated `Makefile` and get `missing separator`, your editor probably converted tabs into spaces. <br><br>
 > ⚠️ **Check the subject.** The generated files are a starting point. Always verify the final `Makefile` and `README.md` against the requirements of your specific project.
