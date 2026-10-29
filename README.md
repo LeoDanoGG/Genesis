@@ -1,5 +1,8 @@
 # Genesis
 
+> ⚠️ **DISCLAIMER** <br>
+> `Genesis.sh` only works for `c` projects at this moment (`Python` workspace coming soon...)
+
 Genesis is an interactive CLI assistant (*wizard*) for 42 School students to quickly scaffold project workspaces, clone Vogsphere/GitHub repositories, generate language-specific boilerplate (C & Python), and keep your source files synchronized between the `Makefile` and the `README.md`. A configuration file lets you skip every question with a single command.
 
 > Genesis is an independent, community-made tool. It is not affiliated with, endorsed by or sponsored by 42 or its schools
@@ -154,12 +157,12 @@ GENERATE_README=y
 | Key					| Values									| Meaning										|
 |-----------------------|-------------------------------------------|-----------------------------------------------|
 | `AUTHOR`				| letters, digits, `. _ , -` and spaces		| Author login(s). Empty = your `$USER`.		|
-| `LANGUAGE`			| `c` \| `python`							| Language of the new project.					|
-| `PROJECT_TYPE`		| `program` \| `library`					| What the C `Makefile` builds.					|
-| `GENERATE_HEADER`		| `y` \| `n`								| Generate `<name>.h` (C only).					|
-| `GENERATE_MAKEFILE`	| `y` \| `n`								| Generate a `Makefile` (C only).				|
-| `USE_LIBFT`			| `y` \| `n`								| Use the `libft` template in the `Makefile`.	|
-| `GENERATE_README`		| `y` \| `n`								| Generate `README.md`.							|
+| `LANGUAGE`			| `c` \ `python`							| Language of the new project.					|
+| `PROJECT_TYPE`		| `program` \ `library`						| What the C `Makefile` builds.					|
+| `GENERATE_HEADER`		| `y` \ `n`									| Generate `<name>.h` (C only).					|
+| `GENERATE_MAKEFILE`	| `y` \ `n`									| Generate a `Makefile` (C only).				|
+| `USE_LIBFT`			| `y` \ `n`									| Use the `libft` template in the `Makefile`.	|
+| `GENERATE_README`		| `y` \ `n`									| Generate `README.md`.							|
 
 Example: with `GENERATE_README=n`, the wizard prompt becomes `[y/N]` and fast mode skips the README. `y`/`yes` and `n`/`no` are accepted in any case.
 
