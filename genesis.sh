@@ -425,9 +425,6 @@ if [ "$LANG_CHOICE" = "1" ]; then
 EOF
     fi
 
-    # HEADER is only set if the header really exists (generated now or already
-    # in the repo). Otherwise it stays empty so 'make' never depends on a
-    # missing file; fill it in by hand if your header has another name.
     HEADER_NAME=""
     [ -f "$DIR_NAME.h" ] && HEADER_NAME="$DIR_NAME.h"
 
@@ -456,9 +453,6 @@ OBJS        = \$(SRCS:.c=.o)
 
 HEADER      = $HEADER_NAME
 
-# Library template (libft). For another library with the same layout
-# (a folder with its own Makefile that builds a .a), edit LIBFT_DIR and
-# LIBFT. Its objects are merged into \$(NAME) with ar.
 LIBFT_DIR   = ./libft
 LIBFT       = \$(LIBFT_DIR)/libft.a
 INCLUDES    = -I. -I\$(LIBFT_DIR)
@@ -538,9 +532,6 @@ OBJS        = \$(SRCS:.c=.o)
 
 HEADER      = $HEADER_NAME
 
-# Library template (libft). For another library with the same layout
-# (a folder with its own Makefile that builds a .a), edit LIBFT_DIR,
-# LIBFT and the -lft flag in the \$(NAME) rule.
 LIBFT_DIR   = ./libft
 LIBFT       = \$(LIBFT_DIR)/libft.a
 INCLUDES    = -I. -I\$(LIBFT_DIR)
